@@ -265,5 +265,56 @@ select * from conference_room_speaker_Abiraj
 --DROP COLUMN Email;
 
 alter table room_Abiraj add No_Of_Seats int
-select * from room_Abiraj 
+update room_Abiraj set No_Of_Seats = 150
+select * from room_Abiraj
 
+alter table speaker_Abiraj add Fee float
+update speaker_Abiraj set Fee = '600'
+select * from speaker_Abiraj
+
+
+alter table venue_Abiraj add Price int
+update venue_Abiraj set Price = '500'
+select * from venue_Abiraj
+
+
+sp_help venue_Abiraj
+
+
+
+
+ 
+
+
+
+select * from venue_Abiraj
+select * from speaker_Abiraj
+
+
+
+--task 3-----------------------------------------------
+create table extra_expenses_Abiraj
+(
+expID int not null primary key,
+exp_Title varchar(50),
+exp_Cost float,
+conference_ID varchar(10),
+constraint fk_conference_ID foreign key(conference_ID) 
+REFERENCES conference_Abiraj (conference_ID) ON DELETE CASCADE,
+)
+
+create view conference as
+select v.Price as 'venue_Cost', Sum(S.Fee) as 'Total_Speaker_Cost', 
+(select Sum(ee.exp_Cost) from extra_expenses_Abiraj as ee) as 'Totalextra_Cost'
+from conference_room_speaker_Abiraj as CSR inner join speaker_Abiraj as S on S.speaker_Id = CSR.speaker_ID
+inner join conference_Abiraj as C on C.conference_ID = CSR.conference_ID
+ inner join venue_Abiraj as V on V.venue_ID = c.venue_id
+where C.conference_ID = 'VSC18' group by v.Price
+
+select * from conference
+
+
+insert into extra_expenses_Abiraj(expID, exp_Title, exp_Cost, conference_ID)
+values ('1','wages','500','CLC18'),('2','Equipment bill','700','DSC19');
+
+update extra_expenses_Abiraj set expID=3, exp_Title=Extracharge exp_Cost='800', conference_ID = VSC18;
