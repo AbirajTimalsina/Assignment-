@@ -260,3 +260,10 @@ and crs.speaker_date='2018-01-03'
 select * from speaker_Abiraj 
 select * from conference_room_speaker_Abiraj
 -----END--------------------
+
+--ALTER TABLE Customers
+--DROP COLUMN Email;
+
+alter table room_Abiraj add No_Of_Seats int
+select * from room_Abiraj 
+
